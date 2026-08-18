@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Пошаговое обучение менеджеров новой воронке До Нуля." />
+    <title>До Нуля — обучение новой воронке</title>
+    <style>
+      :root {
+        --ink: #1c2630;
+        --muted: #62707b;
+        --cream: #f8f6f1;
+        --paper: #ffffff;
+        --mint: #dff4ec;
+        --mint-deep: #137a62;
+        --mint-dark: #0d5647;
+        --violet: #f1eafe;
+        --violet-deep: #6650a7;
+        --gold: #fff3c8;
+        --gold-deep: #a76e00;
+        --coral: #ffe7e2;
+        --coral-deep: #b84434;
+        --line: #d9e2de;
+        --shadow: 0 16px 38px rgba(21, 49, 43, .09);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 10% 0%, rgba(203, 238, 221, .9), transparent 30rem),
+          radial-gradient(circle at 95% 20%, rgba(238, 223, 255, .6), transparent 27rem),
+          var(--cream);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      button { font: inherit; }
+      .shell { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 64px; }
+      .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.03em; }
+      .brand-mark { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 12px; background: var(--mint-dark); color: white; font-size: 19px; }
+      .brand small { display: block; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 280px;
+        gap: 24px;
+        align-items: end;
+        padding: 52px 0 30px;
+      }
+      .eyebrow { color: var(--mint-deep); font-size: 13px; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; }
+      h1 { max-width: 760px; margin: 12px 0 16px; font-size: clamp(38px, 6vw, 68px); line-height: .98; letter-spacing: -.065em; }
+      .lead { max-width: 680px; margin: 0; color: #485963; font-size: clamp(18px, 2vw, 23px); line-height: 1.4; }
+      .hero-card { padding: 22px; border: 1px solid rgba(19, 122, 98, .2); border-radius: 24px; background: rgba(255,255,255,.74); box-shadow: var(--shadow); }
+      .hero-card strong { display: block; color: var(--mint-dark); font-size: 38px; letter-spacing: -.05em; }
+      .hero-card span { color: var(--muted); font-weight: 650; line-height: 1.35; }
+
+      .stepper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; padding: 9px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.7); }
+      .stepper button { min-height: 64px; padding: 10px 14px; border: 0; border-radius: 12px; text-align: left; color: #53636c; background: transparent; cursor: pointer; font-size: 13px; font-weight: 800; line-height: 1.2; }
+      .stepper button span { display: block; margin-bottom: 4px; color: #91a19e; font-size: 11px; letter-spacing: .1em; }
+      .stepper button[aria-current="step"] { color: white; background: var(--mint-dark); box-shadow: 0 8px 16px rgba(13,86,71,.22); }
+      .stepper button[aria-current="step"] span { color: #bde8d9; }
+
+      .panel { margin-top: 20px; padding: clamp(22px, 4vw, 42px); border: 1px solid var(--line); border-radius: 30px; background: rgba(255,255,255,.88); box-shadow: var(--shadow); }
+      .panel[hidden] { display: none; }
+      .panel-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 26px; }
+      .panel-top h2 { margin: 6px 0 0; font-size: clamp(29px, 4vw, 46px); line-height: 1; letter-spacing: -.055em; }
+      .number { flex: 0 0 auto; display: grid; width: 58px; height: 58px; place-items: center; border-radius: 18px; background: var(--mint); color: var(--mint-dark); font-weight: 900; font-size: 20px; }
+
+      .mentor { display: grid; grid-template-columns: 58px minmax(0,1fr); gap: 14px; align-items: center; margin-bottom: 26px; padding: 14px; border: 1px solid #b9dfd1; border-radius: 19px; background: linear-gradient(100deg, #effaf6, #e3f5ee); }
+      .mentor-avatar { display: grid; width: 58px; height: 58px; place-items: center; border: 4px solid white; border-radius: 18px; color: white; background: linear-gradient(135deg, #486e63, #102f2a); font-size: 22px; font-weight: 900; box-shadow: 0 4px 14px rgba(13,86,71,.15); }
+      .mentor p { margin: 0; color: #375b51; font-size: 17px; line-height: 1.38; }
+      .mentor b { display: block; margin-bottom: 3px; color: var(--mint-dark); font-size: 14px; letter-spacing: .04em; text-transform: uppercase; }
+
+      .rule { margin: 18px 0; padding: 18px 20px; border-left: 5px solid var(--gold-deep); border-radius: 14px; background: var(--gold); color: #604505; font-weight: 700; line-height: 1.45; }
+      .rule strong { color: #6d4900; }
+
+      .funnel { display: grid; grid-template-columns: repeat(6, minmax(120px,1fr)); gap: 10px; overflow-x: auto; padding: 6px 0 16px; }
+      .stage { min-width: 145px; padding: 16px; border: 1px solid #bfe2d4; border-radius: 18px; background: #effaf6; }
+      .stage .stage-code { display: block; margin-bottom: 10px; color: #397b68; font-size: 11px; font-weight: 900; letter-spacing: .1em; }
+      .stage strong { display: block; color: #145b4a; font-size: 16px; line-height: 1.1; }
+      .stage small { display: block; margin-top: 10px; color: #497169; font-size: 12px; line-height: 1.35; }
+      .stage:nth-child(3) { border-color: #d9c2fa; background: #f6f1ff; }
+      .stage:nth-child(3) strong { color: var(--violet-deep); }
+      .stage:nth-child(3) .stage-code { color: #7a61b5; }
+      .stage:nth-child(5) { border-color: #f1d8a0; background: #fffaf0; }
+
+      .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .info-card { padding: 20px; border: 1px solid var(--line); border-radius: 20px; background: #fff; }
+      .info-card h3 { margin: 0 0 8px; color: var(--mint-dark); font-size: 18px; letter-spacing: -.025em; }
+      .info-card p { margin: 0; color: #55646c; line-height: 1.45; }
+      .info-card.hot { border-color: #efb9ae; background: #fff6f4; }
+      .info-card.hot h3 { color: var(--coral-deep); }
+      .info-card.violet { border-color: #d9c2fa; background: #f9f6ff; }
+      .info-card.violet h3 { color: var(--violet-deep); }
+
+      .pult { overflow: hidden; border: 1px solid #d7cced; border-radius: 22px; background: #fbf9ff; }
+      .pult-head { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; color: white; background: #54407f; }
+      .pult-head b { letter-spacing: .08em; }
+      .pult-head span { font-size: 13px; opacity: .84; }
+      .pult-body { padding: 18px; }
+      .pult-flow { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
+      .pult-step { min-height: 164px; padding: 16px; border: 1px solid #dfd4f4; border-radius: 15px; background: white; }
+      .pult-step em { display: block; margin-bottom: 10px; color: #805ac2; font-style: normal; font-size: 11px; font-weight: 900; letter-spacing: .1em; }
+      .pult-step b { display: block; color: #41345b; font-size: 17px; }
+      .pult-step p { margin: 9px 0 0; color: #6c647d; font-size: 13px; line-height: 1.4; }
+      .button-rule { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-top: 14px; }
+      .button-rule div { padding: 14px; border-radius: 14px; font-size: 13px; line-height: 1.35; }
+      .button-rule strong { display: block; margin-bottom: 6px; }
+      .button-rule .ready { color: #155d4b; background: #e7f7ef; }
+      .button-rule .thinking { color: #775a13; background: #fff6d8; }
+      .button-rule .change { color: #5f478f; background: #f0eafe; }
+
+      .timeline { display: grid; gap: 10px; margin: 18px 0; }
+      .day { display: grid; grid-template-columns: 90px minmax(0,1fr); gap: 16px; align-items: start; padding: 17px; border: 1px solid var(--line); border-radius: 18px; background: white; }
+      .day-label { display: inline-grid; place-items: center; min-height: 40px; border-radius: 10px; color: var(--mint-dark); background: var(--mint); font-size: 12px; font-weight: 900; letter-spacing: .07em; }
+      .day h3 { margin: 0 0 5px; font-size: 18px; letter-spacing: -.025em; }
+      .day p { margin: 0; color: #56656c; line-height: 1.45; }
+      .day.discount { border-color: #eed497; background: #fffdf7; }
+      .day.discount .day-label { color: #8e5c00; background: var(--gold); }
+      .day.final { border-color: #efc2ba; background: #fff8f6; }
+      .day.final .day-label { color: #a33e30; background: var(--coral); }
+      .formula { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 16px; padding: 12px; border-radius: 13px; color: #4e4670; background: var(--violet); font-size: 14px; font-weight: 800; }
+      .formula b { padding: 6px 9px; border-radius: 8px; background: white; }
+
+      .route { margin-top: 14px; padding: 20px; border: 1px solid #c9dfd6; border-radius: 20px; background: #f9fffc; }
+      .route h3 { margin: 0 0 7px; color: var(--mint-dark); font-size: 20px; letter-spacing: -.03em; }
+      .route p { margin: 0; color: #54656b; line-height: 1.45; }
+      .route ul { margin: 13px 0 0; padding-left: 20px; color: #3a5850; line-height: 1.55; }
+      .pool { border-color: #d8c6f0; background: #faf7ff; }
+      .pool h3 { color: #654b9d; }
+
+      .actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 28px; }
+      .action { padding: 14px 19px; border: 0; border-radius: 13px; color: white; background: var(--mint-dark); box-shadow: 0 8px 14px rgba(13,86,71,.16); cursor: pointer; font-weight: 850; }
+      .action:hover { background: #0a493d; }
+      .action.secondary { color: var(--mint-dark); background: #e7f5ef; box-shadow: none; }
+
+      .quiz-intro { padding: 20px; border-radius: 20px; background: linear-gradient(135deg, #e3f4ed, #fbfbf0); }
+      .quiz-intro h3 { margin: 5px 0; font-size: 25px; letter-spacing: -.04em; }
+      .quiz-intro p { margin: 0; color: #567065; }
+      .quiz { margin-top: 18px; padding: 22px; border: 1px solid var(--line); border-radius: 21px; background: white; }
+      .quiz-progress { margin: 0 0 13px; color: var(--mint-deep); font-size: 12px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+      .quiz h3 { margin: 0 0 19px; font-size: clamp(22px,3vw,32px); line-height: 1.14; letter-spacing: -.045em; }
+      .answers { display: grid; gap: 10px; }
+      .answer { display: grid; grid-template-columns: 32px minmax(0,1fr); gap: 12px; align-items: center; width: 100%; padding: 14px; border: 1px solid #d6e0dc; border-radius: 13px; color: #3c4d52; background: #fff; cursor: pointer; text-align: left; font-weight: 720; }
+      .answer:hover:not(:disabled) { border-color: #3aa486; background: #f4fcf8; }
+      .answer:disabled { cursor: default; }
+      .letter { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 9px; color: #2f695a; background: #e8f6f0; font-size: 13px; font-weight: 900; }
+      .answer.correct { border-color: #38a77e; color: #185b48; background: #edfcf4; }
+      .answer.correct .letter { color: white; background: #177b61; }
+      .answer.wrong { border-color: #e29b8f; color: #8d3e35; background: #fff4f1; }
+      .answer.wrong .letter { color: white; background: #bf5545; }
+      .feedback { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-top: 16px; padding: 15px; border-radius: 13px; background: #eff9f3; color: #356354; }
+      .feedback p { margin: 0; line-height: 1.4; }
+      .result { padding: 26px; border-radius: 19px; color: #164f42; background: #e5f6ed; }
+      .result strong { display: block; font-size: 42px; letter-spacing: -.06em; }
+      .result p { margin: 7px 0 18px; color: #3e675c; }
+
+      footer { padding-top: 23px; text-align: center; color: #7b898d; font-size: 13px; }
+      @media (max-width: 800px) {
+        .hero, .grid-2 { grid-template-columns: 1fr; }
+        .hero-card { max-width: 340px; }
+        .stepper { grid-template-columns: repeat(2, 1fr); }
+        .pult-flow, .button-rule { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      }
+      @media (max-width: 540px) {
+        .shell { width: min(100% - 20px, 1120px); padding-top: 16px; }
+        .hero { padding: 32px 0 20px; }
+        h1 { font-size: 40px; }
+        .panel { padding: 20px; border-radius: 22px; }
+        .pult-flow, .button-rule { grid-template-columns: 1fr; }
+        .day { grid-template-columns: 1fr; gap: 10px; }
+        .day-label { width: max-content; padding: 0 12px; }
+        .feedback { align-items: stretch; flex-direction: column; }
+        .actions .action { flex: 1; }
+      }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <div class="brand"><span class="brand-mark">Д</span><div>До Нуля<small>Обучение менеджеров</small></div></div>
+
+      <header class="hero">
+        <div>
+          <div class="eyebrow">Новая воронка · по шагам</div>
+          <h1>Проведи клиента от лида до оплаты — без угадываний.</h1>
+          <p class="lead">Только этапы, Обнулятор и касания. Идём последовательно: один блок — одно понятное правило.</p>
+        </div>
+        <aside class="hero-card"><strong>4 блока</strong><span>Воронка · Обнулятор · касания · итоговый тест из 10 вопросов</span></aside>
+      </header>
+
+      <nav class="stepper" aria-label="Разделы обучения">
+        <button aria-current="step" data-go="0" type="button"><span>01</span>Воронка</button>
+        <button data-go="1" type="button"><span>02</span>Обнулятор</button>
+        <button data-go="2" type="button"><span>03</span>Касания</button>
+        <button data-go="3" type="button"><span>04</span>Тест</button>
+      </nav>
+
+      <section class="panel" data-panel="0">
+        <div class="panel-top"><div><div class="eyebrow">Шаг 01</div><h2>Воронка: шесть видимых этапов.</h2></div><div class="number">01</div></div>
+        <aside class="mentor"><div class="mentor-avatar">ИА</div><div><b>Илья Алексеев · Воронка</b><p>Двигаем сделку только по факту клиента. Готовность подписать — действие внутри «Принимают решение», а не отдельный этап.</p></div></aside>
+        <div class="funnel" aria-label="Шесть этапов воронки">
+          <article class="stage"><span class="stage-code">ЭТАП 01</span><strong>Новый лид</strong><small>Звонок — до 5 активных рабочих минут.</small></article>
+          <article class="stage"><span class="stage-code">ЭТАП 02</span><strong>В работе</strong><small>Контакт был, но консультация не закончена.</small></article>
+          <article class="stage"><span class="stage-code">ЭТАП 03</span><strong>Принимают решение</strong><small>Есть барьер или клиент готов действовать.</small></article>
+          <article class="stage"><span class="stage-code">ЭТАП 04</span><strong>Договор подписан</strong><small>Подпись подтверждена системой.</small></article>
+          <article class="stage"><span class="stage-code">ЭТАП 05</span><strong>Частичный платёж</strong><small>Есть часть первого платежа.</small></article>
+          <article class="stage"><span class="stage-code">ЭТАП 06</span><strong>Полная оплата</strong><small>Передай клиента в сопровождение.</small></article>
+        </div>
+        <div class="rule"><strong>Главное:</strong> «Договор на подписи» — не этап. Подписание проходит только кодом из SMS внутри «Принимают решение». В «Договор подписан» сделка переходит только после подтверждённой подписи.</div>
+        <div class="grid-2">
+          <article class="info-card"><h3>Новый лид</h3><p>Первый исходящий звонок — до 5 активных рабочих минут. Нет ответа: повтори через 10 минут и ещё раз через час.</p></article>
+          <article class="info-card"><h3>В работе</h3><p>Связь оборвалась после живого контакта — это «В работе». Вернись к сохранённым данным и закончи консультацию за 48 рабочих часов.</p></article>
+          <article class="info-card violet"><h3>Принимают решение</h3><p>Три рабочих дня: одно содержательное касание в день. Нет подписи и точной даты — система заберёт сделку в тёплый пул, где её продолжит другой МПП.</p></article>
+          <article class="info-card hot"><h3>После подписи</h3><p>Дни 1–3 — касание ежедневно. Если обязательные касания не выполняются по регламенту, сделку передадут другому менеджеру.</p></article>
+        </div>
+        <div class="actions"><button class="action" data-next type="button">Теперь — к Обнулятору →</button></div>
+      </section>
+
+      <section class="panel" data-panel="1" hidden>
+        <div class="panel-top"><div><div class="eyebrow">Шаг 02</div><h2>Обнулятор: сначала факты, потом кнопка.</h2></div><div class="number">02</div></div>
+        <aside class="mentor"><div class="mentor-avatar">СМ</div><div><b>Светлана Марченко · Обнулятор</b><p>Не держи разговор в голове. Заполняй Пульт сделки по порядку, который клиент обычно даёт в консультации.</p></div></aside>
+        <section class="pult" aria-label="Порядок заполнения Обнулятора">
+          <div class="pult-head"><b>ОБНУЛЯТОР</b><span>Пульт сделки</span></div>
+          <div class="pult-body">
+            <div class="pult-flow">
+              <article class="pult-step"><em>01 · СРАЗУ</em><b>Маршрут и долги</b><p>Выбери РДГ или БФЛ. Отметь виды долгов, внеси сумму и количество договоров.</p></article>
+              <article class="pult-step"><em>02 · КАК УЗНАЛ</em><b>Расчёт</b><p>Доход, дети, регион, просрочки. После первой суммы посмотри вердикт и проговори цифры клиенту.</p></article>
+              <article class="pult-step"><em>03 · УСЛОВИЯ</em><b>Данные договора</b><p>ФИО, тариф, дата первого платежа, день платежа. При частичной оплате меньше 13 500 ₽ — дата доакцепта.</p></article>
+              <article class="pult-step"><em>04 · ПО ФАКТУ</em><b>Выбери кнопку</b><p>Кнопка должна совпадать с готовностью клиента — не нажимай её «на всякий случай».</p></article>
+            </div>
+            <div class="button-rule">
+              <div class="ready"><strong>✍ Подписать договор</strong>Клиент готов; есть долг, ФИО, дата первого платежа и при необходимости дата доакцепта.</div>
+              <div class="thinking"><strong>🤔 Думает · отправить</strong>Клиент не готов или данных не хватает. Для отправки достаточно суммы долга.</div>
+              <div class="change"><strong>✓ Применить изменения</strong>Условия изменились, а ссылка уже создана. Обновляет её без нового сообщения клиенту.</div>
+            </div>
+          </div>
+        </section>
+        <div class="rule"><strong>Запомни:</strong> «Отправить ссылку на оплату» можно только после подтверждённого подписания. После любой кнопки прочитай строку статуса — не нажимай повторно вслепую.</div>
+        <div class="actions"><button class="action secondary" data-prev type="button">← К воронке</button><button class="action" data-next type="button">Зафиксировать касания →</button></div>
+      </section>
+
+      <section class="panel" data-panel="2" hidden>
+        <div class="panel-top"><div><div class="eyebrow">Шаг 03</div><h2>Касания: у каждого дня есть цель.</h2></div><div class="number">03</div></div>
+        <aside class="mentor"><div class="mentor-avatar">ЕС</div><div><b>Евгений Сидоров · Касания</b><p>Не дожимаем «вообще». В каждом разговоре — один результат или точная договорённость о следующем шаге.</p></div></aside>
+        <div class="timeline">
+          <article class="day"><div class="day-label">Д0 · сразу</div><div><h3>Кредитная история и действие сейчас</h3><p>Отправь инструкцию по получению КИ. Если клиент готов — помоги подписать договор кодом из SMS. При оплате — внести от 1 000 ₽ или полный первый платёж.</p></div></article>
+          <article class="day"><div class="day-label">Д1 · второй день</div><div><h3>Юридическое заключение и оплата</h3><p>КИ есть — презентуй персональное юридическое заключение и получи оплату. КИ нет — дай предварительное заключение, помоги получить КИ и зафиксируй точный следующий шаг.</p></div></article>
+          <article class="day discount"><div class="day-label">Д2 · третий день</div><div><h3>Скидка — только за полную оплату сегодня</h3><p>Предложи утверждённую скидку 10 000 ₽ только при полной оплате сегодня. Она действует до 23:59, не переносится и завтра уже не действует.</p></div></article>
+          <article class="day final"><div class="day-label">Д3 · финал</div><div><h3>Действие, точная дата или тёплый пул</h3><p>Нет подписи и точной договорённости за три рабочих дня — система забирает сделку в тёплый пул, где её берёт другой МПП.</p></div></article>
+        </div>
+        <div class="formula"><span>Точная договорённость:</span><b>Дата</b><span>+</span><b>Время</b><span>+</span><b>Действие</b><span>+</span><b>Канал</b></div>
+        <section class="route"><h3>Договор подписан → получить первый платёж</h3><p>Первые три рабочих дня — одно обязательное касание каждый день, затем — раз в 48 рабочих часов. На 7-й и 14-й день руководитель отдела продаж проверяет качество ведения.</p><ul><li>Не выполнено обязательное касание — сделку передадут другому менеджеру.</li><li>Частичная оплата: подтверди сумму, назови остаток и продолжай с текущего касания, не начинай цепочку заново.</li><li>Полная оплата: передай в сопровождение за 30 рабочих минут.</li></ul></section>
+        <section class="route pool"><h3>Тёплый пул — это не забытая сделка</h3><p>На старте его обзванивают стажёры, менеджеры с конверсией менее 10% и менеджеры без текущих задач. В карточке остаются причина паузы, барьер, прогресс Обнулятора и материалы — следующий МПП не начинает разговор с нуля.</p></section>
+        <div class="actions"><button class="action secondary" data-prev type="button">← К Обнулятору</button><button class="action" data-next type="button">Проверить себя →</button></div>
+      </section>
+
+      <section class="panel" data-panel="3" hidden>
+        <div class="panel-top"><div><div class="eyebrow">Шаг 04</div><h2>Итоговый тест: 10 вопросов.</h2></div><div class="number">04</div></div>
+        <aside class="mentor"><div class="mentor-avatar">Н</div><div><b>Никита · Руководитель отдела продаж</b><p>Я смотрю на факт касания, срок, результат и следующий шаг. Этот тест — короткая проверка перед первой сделкой.</p></div></aside>
+        <div class="quiz-intro"><h3>Один вопрос за раз</h3><p>Выбери вариант — сразу увидишь разбор. Ошибка не останавливает тест.</p></div>
+        <section class="quiz" aria-live="polite">
+          <p class="quiz-progress" id="quiz-progress"></p>
+          <h3 id="quiz-question"></h3>
+          <div class="answers" id="answers"></div>
+          <div class="feedback" id="feedback" hidden><p id="feedback-text"></p><button class="action" id="next-question" type="button">Следующий вопрос →</button></div>
+          <div class="result" id="result" hidden><strong id="score"></strong><p>Готово. Если где-то ошибся — пройди тест ещё раз: правила уже собраны по шагам.</p><button class="action" id="restart" type="button">Пройти тест ещё раз</button></div>
+        </section>
+        <div class="actions"><button class="action secondary" data-prev type="button">← К касаниям</button></div>
+      </section>
+
+      <footer>До Нуля · обучение новой воронке · публичная версия для менеджеров</footer>
+    </main>
+
+    <script>
+      const panels = [...document.querySelectorAll('[data-panel]')];
+      const steps = [...document.querySelectorAll('[data-go]')];
+      let activePanel = 0;
+
+      function showPanel(index) {
+        activePanel = Math.max(0, Math.min(index, panels.length - 1));
+        panels.forEach((panel, panelIndex) => panel.hidden = panelIndex !== activePanel);
+        steps.forEach((step, stepIndex) => {
+          if (stepIndex === activePanel) step.setAttribute('aria-current', 'step');
+          else step.removeAttribute('aria-current');
+        });
+        document.querySelector('.stepper').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      }
+      steps.forEach(button => button.addEventListener('click', () => showPanel(Number(button.dataset.go))));
+      document.querySelectorAll('[data-next]').forEach(button => button.addEventListener('click', () => showPanel(activePanel + 1)));
+      document.querySelectorAll('[data-prev]').forEach(button => button.addEventListener('click', () => showPanel(activePanel - 1)));
+
+      const questions = [
+        ['Новый лид назначен. Когда нужен первый исходящий звонок?', ['До конца рабочего дня', 'В течение 5 активных рабочих минут', 'В течение 30 рабочих минут'], 1, 'Первый исходящий звонок по новому лиду — до 5 активных рабочих минут.'],
+        ['Клиент ответил, но связь оборвалась до завершения консультации. Какой этап ставим?', ['Новый лид', 'В работе', 'Принимают решение'], 1, 'Контакт уже был, но консультация не завершена — это этап «В работе».'],
+        ['В «Принимают решение» прошло три рабочих дня: нет подписи и точной договорённости. Что дальше?', ['Продолжать обычные касания', 'Система заберёт сделку в тёплый пул — там её возьмёт другой МПП', 'Перевести в «Договор подписан»'], 1, 'Без подписи и точной даты за три рабочих дня система сама заберёт сделку и передаст её в тёплый пул.'],
+        ['Клиент пока не готов и не знает ФИО или дату первого платежа, но сумма долга внесена. Что нажать в Обнуляторе?', ['✍ Подписать договор', '🤔 Думает · отправить', '₽ Отправить ссылку на оплату'], 1, 'Если клиент не готов или данных не хватает, нажимаем «🤔 Думает · отправить».'],
+        ['Кто на старте обзванивает тёплый пул?', ['Стажёры, менеджеры с конверсией менее 10% и менеджеры без текущих задач', 'Только руководитель отдела продаж', 'Только прежний менеджер клиента'], 0, 'На старте пул обзванивают стажёры, менеджеры с конверсией менее 10% и менеджеры без текущих задач.'],
+        ['Что нужно сделать во второй рабочий день в «Принимают решение»?', ['Презентовать юридическое заключение и получить оплату', 'Сразу перевести сделку в тёплый пул', 'Предложить скидку на следующий день'], 0, 'Во второй рабочий день презентуй юридическое заключение и веди клиента к оплате.'],
+        ['Что предлагаешь в третий рабочий день, если полной оплаты ещё нет?', ['Скидку 10 000 ₽ за полную оплату сегодня — завтра она уже не действует', 'Скидку за обещание оплатить на следующей неделе', 'Любую скидку за частичную оплату'], 0, 'Скидка 10 000 ₽ действует только за полную оплату сегодня, до 23:59. На следующий день она не переносится.'],
+        ['Договор подтверждённо подписан. Как часто нужно касаться клиента в первые три рабочих дня?', ['Раз в 48 рабочих часов', 'Каждый рабочий день', 'Только если клиент сам написал'], 1, 'После подписи в первые три рабочих дня обязательное касание — каждый рабочий день.'],
+        ['Что считается точной договорённостью с клиентом?', ['«Созвонимся позже»', 'Дата, время, действие и канал', 'Только дата платежа'], 1, 'Точная договорённость = дата + время + действие + канал. Она заменяет ближайшее обычное касание.'],
+        ['Обязательное касание после подписи не выполнено по регламенту. Что произойдёт?', ['Сделку передадут другому менеджеру', 'Клиент автоматически уйдёт в тёплый пул', 'Достаточно оставить комментарий'], 0, 'Пропуск обязательного касания не отправляет клиента в тёплый пул, но сделку передадут другому менеджеру.']
+      ];
+      let questionIndex = 0;
+      let score = 0;
+      let answered = false;
+      const letters = ['А', 'Б', 'В'];
+      const progress = document.querySelector('#quiz-progress');
+      const question = document.querySelector('#quiz-question');
+      const answers = document.querySelector('#answers');
+      const feedback = document.querySelector('#feedback');
+      const feedbackText = document.querySelector('#feedback-text');
+      const nextQuestion = document.querySelector('#next-question');
+      const result = document.querySelector('#result');
+      const scoreText = document.querySelector('#score');
+
+      function renderQuestion() {
+        const item = questions[questionIndex];
+        answered = false;
+        feedback.hidden = true;
+        result.hidden = true;
+        progress.textContent = `Вопрос ${questionIndex + 1} из ${questions.length}`;
+        question.textContent = item[0];
+        answers.innerHTML = '';
+        item[1].forEach((option, index) => {
+          const button = document.createElement('button');
+          button.className = 'answer';
+          button.type = 'button';
+          button.innerHTML = `<span class="letter">${letters[index]}</span><span>${option}</span>`;
+          button.addEventListener('click', () => answerQuestion(index));
+          answers.append(button);
+        });
+      }
+      function answerQuestion(index) {
+        if (answered) return;
+        answered = true;
+        const item = questions[questionIndex];
+        const choices = [...answers.children];
+        choices.forEach((button, choiceIndex) => {
+          button.disabled = true;
+          if (choiceIndex === item[2]) button.classList.add('correct');
+          else if (choiceIndex === index) button.classList.add('wrong');
+        });
+        if (index === item[2]) score += 1;
+        feedbackText.textContent = (index === item[2] ? 'Верно. ' : 'Почти. ') + item[3];
+        nextQuestion.textContent = questionIndex === questions.length - 1 ? 'Показать результат' : 'Следующий вопрос →';
+        feedback.hidden = false;
+      }
+      nextQuestion.addEventListener('click', () => {
+        if (questionIndex === questions.length - 1) {
+          answers.innerHTML = '';
+          feedback.hidden = true;
+          progress.textContent = 'Итог';
+          question.textContent = 'Тест завершён';
+          scoreText.textContent = `${score} / ${questions.length}`;
+          result.hidden = false;
+          return;
+        }
+        questionIndex += 1;
+        renderQuestion();
+      });
+      document.querySelector('#restart').addEventListener('click', () => { questionIndex = 0; score = 0; renderQuestion(); });
+      renderQuestion();
+    </script>
+  </body>
+</html>
